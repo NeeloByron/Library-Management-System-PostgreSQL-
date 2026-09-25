@@ -45,15 +45,6 @@ The system implements a relational schema mapping out the data dependencies betw
   
   ### 1. Schema Definition (`schema.sql`)
 ```sql
--- Create Authors Table
-CREATE TABLE authors (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    nationality VARCHAR(100),
-    birth_year INT,
-    death_year INT
-);
-
 -- Create Books Table
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
@@ -64,11 +55,20 @@ CREATE TABLE books (
     available BOOLEAN DEFAULT TRUE
 );
 
+-- Create Authors Table
+CREATE TABLE authors (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    nationality VARCHAR(100),
+    birth_year INT,
+    death_year INT
+);
+
 -- Create Patrons Table
 CREATE TABLE patrons (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255_UNIQUE NOT NULL,
+    email VARCHAR(255_UNIQUE NOT NULL,)
     borrowed_books INT[] DEFAULT ARRAY[]::INT[]
 );
 ```
