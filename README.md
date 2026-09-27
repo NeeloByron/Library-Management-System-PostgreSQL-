@@ -12,35 +12,42 @@ A relational database project implemented in *PostgreSQL* to manage a collection
 
 The database contains authors, books and patrons
 
+## Authors
 
-```mermaid
-erDiagram
-    AUTHORS o|--o{ BOOKS : writes
+| Column | Data Type | Constraints |
+|---|---|---|
+| id | SERIAL | Primary key |
+| name | VARCHAR(255) | NOT NULL |
+| nationality | VARCHAR(100) | Optional |
+| birth_year | INT | Optional |
+| death_year | INT | Optional |
 
-    AUTHORS {
-        SERIAL id PK
-        VARCHAR(255) name "NOT NULL"
-        VARCHAR(100) nationality
-        INT birth_year
-        INT death_year
-    }
+## Books
 
-    BOOKS {
-        SERIAL id PK
-        VARCHAR(255) title "NOT NULL"
-        INT author_id FK "ON DELETE CASCADE"
-        TEXT[] genres
-        INT published_year
-        BOOLEAN available "DEFAULT TRUE"
-    }
+| Column | Data Type | Constraints |
+|---|---|---|
+| id | SERIAL | Primary key |
+| title | VARCHAR(255) | NOT NULL |
+| author_id | INT | Foreign key → authors(id); ON DELETE CASCADE |
+| genres | TEXT[] | Optional |
+| published_year | INT | Optional |
+| available | BOOLEAN | Default: TRUE |
 
-    PATRONS {
-        SERIAL id PK
-        VARCHAR(255) name "NOT NULL"
-        VARCHAR(255) email UK "NOT NULL"
-        INT[] borrowed_books "DEFAULT empty array"
-    }
-```
+## Patrons
+
+| Column | Data Type | Constraints |
+|---|---|---|
+| id | SERIAL | Primary key |
+| name | VARCHAR(255) | NOT NULL |
+| email | VARCHAR(255) | UNIQUE, NOT NULL |
+| borrowed_books | INT[] | Default: empty integer array |
+
+## Relationships
+
+- One author can have many books.
+- Each book can reference one author through `author_id`.
+- Deleting an author also deletes their linked books.
+- Patrons store borrowed book IDs in `borrowed_books`. This array does not enforce foreign key relationships.
 
 ## Setup 
  
@@ -106,6 +113,32 @@ Authors were inserted first because books reference their author IDs.
 
 ### 3. Core Operations & Advanced Queries (`queries.sql`)
 Below is a sampling of the sprint operations documented in the transaction script:
+
+### Read Operations
+
+#### Get All Books
+
+Displays all books in the library.
+
+![Get all books](./Assets/AllBooks.png)
+
+#### Get a Book by Title
+
+Finds the book titled `1984`.
+
+![Get a book by title](./Assets/ByTitle.png)
+
+#### Get Books by a Specific Author
+
+Displays all books written by George Orwell.
+
+![Get books by author](./Assets/SpecificAuthor.png)
+
+#### Get All Available Books
+
+Displays all books where `available` is `TRUE`.
+
+![Get all available books](./Assets/avaiableBooks.png)
 
 ```sql
 -- Sprint 3: View books by specific author (e.g., George Orwell, ID = 1)

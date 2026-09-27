@@ -10,7 +10,7 @@ SELECT * FROM books;
 
 -- Get a book by title
 SELECT * FROM books
-WHERE title = '1984'l
+WHERE title = '1984';
 
 -- Get all books by a specific author
 SELECT books.*
@@ -20,4 +20,4 @@ WHERE authors.name = 'George Orwell';
 
 -- Get all available books
 SELECT * FROM books
-WHERE available = TRUE;
+WHERE available = TRUE
