@@ -140,6 +140,40 @@ Displays all books where `available` is `TRUE`.
 
 ![Get all available books](./Assets/avaiableBooks.png)
 
+### Update Operations
+
+#### Mark a Book as Borrowed
+
+Updates a book's availability to `FALSE` to indicate it is borrowed.
+
+![Mark a book as borrowed](./Assets/borrowedBook.png)
+
+#### Add a New Genre to a Book
+
+Adds a new genre to an existing book's genres array.
+
+![Add a new genre to a book](./Assets/newGenre.png)
+
+#### Add a Borrowed Book to a Patron's Record
+
+Adds the borrowed book's ID to the patron's `borrowed_books` array.
+
+![Add a borrowed book to a patron's record](./Assets/borrowedBookPatron.png)
+
+### Delete Operations
+
+#### Delete a Book by Title
+
+Deletes the book titled `1984` from the books table.
+
+![Delete a book by title](./Assets/deleteBytitle.png)
+
+#### Delete an Author by ID
+
+Deletes an author using their ID. Their books are also deleted because of `ON DELETE CASCADE`.
+
+![Delete an author by ID](./Assets/deleteAuthorByID.png)
+
 ```sql
 -- Sprint 3: View books by specific author (e.g., George Orwell, ID = 1)
 SELECT * FROM books WHERE author_id = 1;
@@ -151,3 +185,29 @@ UPDATE patrons SET borrowed_books = array_append(borrowed_books, 3) WHERE id = 2
 -- Sprint 6: Find all available books published after 1950
 SELECT * FROM books WHERE available = TRUE AND published_year > 1950;
 ```
+
+### Advanced Queries
+
+#### Find Books Published After 1950
+
+![Books published after 1950](./Assets/1950.png)
+
+#### Find All American Authors
+
+![All American authors](./Assets/American.png)
+
+#### Set All Books as Available
+
+![Set all books as available](./Assets/setAvailable.png)
+
+#### Find Available Books Published After 1950
+
+![Available books published after 1950](./Assets/publishedYear.png)
+
+#### Find Authors Whose Names Contain "George"
+
+![Authors whose names contain George](./Assets/georgeName.png)
+
+#### Increment the Published Year 1869 by 1
+
+![Update published year from 1869 to 1870](./Assets/Increase.png)
