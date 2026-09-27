@@ -8,27 +8,38 @@ A relational database project implemented in *PostgreSQL* to manage a collection
 - `Queries.sql` - Operational CRUD transactions and advanced data analysis queries.
 - `README.md` - Setup and execution instructions.
 
-# Database schama Design 
+# Database schema Design 
 
-The system implements a relational schema mapping out the data dependencies between books, authors and borrowing patrons.
+The database contains authors, books and patrons
 
 
-```
-  ┌───────────────┐              ┌───────────────┐
-  │    AUTHORS    │              │     BOOKS     │
-  ├───────────────┤              ├───────────────┤
-  │ PK │ id       │◄───┐         │ PK │ id       │
-  │    │ name     │    └─────────┼─FK │ author_id│
-  │    │ ...      │              │    │ title    │
-  └───────────────┘              │    │ ...      │
-                                 └───────────────┘
-  ┌───────────────┐
-  │    PATRONS    │
-  ├───────────────┤
-  │ PK │ id       │
-  │    │ name     │
-  │    │ array[]  │ ──(Tracks borrowed book IDs)
-  └───────────────┘
+```mermaid
+erDiagram
+    AUTHORS o|--o{ BOOKS : writes
+
+    AUTHORS {
+        SERIAL id PK
+        VARCHAR(255) name "NOT NULL"
+        VARCHAR(100) nationality
+        INT birth_year
+        INT death_year
+    }
+
+    BOOKS {
+        SERIAL id PK
+        VARCHAR(255) title "NOT NULL"
+        INT author_id FK "ON DELETE CASCADE"
+        TEXT[] genres
+        INT published_year
+        BOOLEAN available "DEFAULT TRUE"
+    }
+
+    PATRONS {
+        SERIAL id PK
+        VARCHAR(255) name "NOT NULL"
+        VARCHAR(255) email UK "NOT NULL"
+        INT[] borrowed_books "DEFAULT empty array"
+    }
 ```
 
 ## Setup 
@@ -72,6 +83,13 @@ CREATE TABLE patrons (
     borrowed_books INT[] DEFAULT ARRAY[]::INT[]
 );
 ```
+#### Create Tables
+
+The authors, books and patrons tables were created together.
+
+![Create authors, books and patrons tables](./Assets/CreateTables.png)
+
+
 ### 2. Sample Data Inserts (`Seed.sql`)
 
 Sample data was inserted into the authors, books and patrons tables.
